@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Para Danitza 🌻</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Georgia,serif;background:radial-gradient(circle at top,#fffdf3,#fff0a8 45%,#f5c84b);display:flex;justify-content:center;align-items:center;color:#654800;overflow:hidden}
+.card{width:min(94vw,450px);min-height:680px;border-radius:32px;background:rgba(255,255,255,.9);box-shadow:0 25px 70px #8d690055;position:relative;overflow:hidden;padding:35px 25px;display:flex;align-items:center;justify-content:center;text-align:center}
+.screen{display:none;z-index:2;animation:in .8s}.screen.on{display:block}
+h1{font-size:39px;color:#9b6900;margin:15px 0}h2{font-size:29px;color:#9b6900}p{font-size:19px;line-height:1.65}
+.flower{font-size:88px;animation:bob 2s infinite}.mini{font-size:35px;margin:20px}
+button{border:0;border-radius:30px;padding:15px 25px;background:#f2c335;color:#513800;font-weight:bold;font-size:16px;box-shadow:0 7px 18px #9b690044;cursor:pointer}
+button:active{transform:scale(.96)}.signature{font-style:italic;margin-top:30px}
+.heart{font-size:58px;animation:beat 1.2s infinite}.petal{position:absolute;top:-50px;font-size:28px;animation:fall linear infinite;z-index:1}
+.p1{left:5%;animation-duration:7s}.p2{left:25%;animation-duration:9s;animation-delay:2s}.p3{left:48%;animation-duration:8s;animation-delay:1s}.p4{left:72%;animation-duration:10s;animation-delay:3s}.p5{left:90%;animation-duration:7s;animation-delay:4s}
+@keyframes in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}@keyframes bob{50%{transform:translateY(-10px)}}@keyframes beat{50%{transform:scale(1.18)}}@keyframes fall{to{transform:translateY(800px) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="card">
+<span class="petal p1">🌻</span><span class="petal p2">🌼</span><span class="petal p3">🌻</span><span class="petal p4">🌼</span><span class="petal p5">🌻</span>
+
+<div id="s1" class="screen on">
+<div class="flower">💌</div><h1>Para Danitza</h1>
+<p>Hay algo que preparé especialmente para ti…</p>
+<button onclick="go(2);music()">💛 ABRIR MI SORPRESA 💛</button>
+</div>
+
+<div id="s2" class="screen">
+<div class="flower">🌻</div><div class="mini">🌼 🌻 🌼</div>
+<h2>Flores amarillas para ti</h2>
+<p>Porque quería que hoy recibieras un pequeño detalle que te recuerde cuánto significas para mí.</p>
+<button onclick="go(3)">✨ CONTINUAR ✨</button>
+</div>
+
+<div id="s3" class="screen">
+<div class="heart">💛</div><h2>Danitza</h2>
+<p>Si pudiera convertir mis sentimientos en flores, llenaría tu mundo de ellas.</p>
+<p><strong>Te amo hoy, mañana y siempre.</strong></p>
+<button onclick="go(4)">🌻 HAY ALGO MÁS 🌻</button>
+</div>
+
+<div id="s4" class="screen">
+<div class="flower">🌻</div><h1>Para siempre tú</h1>
+<p>Gracias por existir, por compartir momentos conmigo y por hacer especiales tantos días.</p>
+<p>Quiero seguir creando recuerdos contigo.</p>
+<p class="signature">Con todo mi amor ❤️</p>
+<button onclick="go(5)">💌 ÚLTIMO MENSAJE</button>
+</div>
+
+<div id="s5" class="screen">
+<div class="heart">❤️</div><h1>Te amo, Danitza</h1>
+<p style="font-size:23px"><strong>Hoy.<br>Mañana.<br>Y siempre.</strong></p>
+<div class="mini">🌻 🌻 🌻</div>
+<p class="signature">Este pequeño detalle es solo para ti.</p>
+</div>
+</div>
+
+<script>
+let audioCtx;
+function music(){
+ if(audioCtx)return;
+ audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+ const notes=[261.63,329.63,392,523.25,392,329.63,293.66,349.23,440,523.25];
+ let i=0;
+ function play(){
+   if(!audioCtx)return;
+   const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+   o.type='sine';o.frequency.value=notes[i%notes.length];
+   g.gain.setValueAtTime(.0001,audioCtx.currentTime);
+   g.gain.exponentialRampToValueAtTime(.055,audioCtx.currentTime+.03);
+   g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.55);
+   o.connect(g).connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.6);
+   i++;setTimeout(play,650);
+ }
+ play();
+}
+function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));document.getElementById('s'+n).classList.add('on')}
+</script>
+</body></html>
